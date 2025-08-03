@@ -1,11 +1,11 @@
 package org.example.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.example.dto.AuthResponse;
 import org.example.dto.LoginRequest;
 import org.example.model.User;
 import org.example.security.TokenProvider;
 import org.example.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,17 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private TokenProvider tokenProvider;
-
-    @Autowired
-    private UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final TokenProvider tokenProvider;
+    private final UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {

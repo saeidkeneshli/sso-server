@@ -18,6 +18,8 @@ public class UserService implements UserDetailsService {
     private final Map<String, User> userDatabase = new HashMap<>();
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+
+    //TODO: Add database
     public UserService() {
         // In-memory user data for this example
         userDatabase.put("user1", new User("user1", passwordEncoder.encode("pass123")));
