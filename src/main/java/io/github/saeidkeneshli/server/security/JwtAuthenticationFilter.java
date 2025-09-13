@@ -1,7 +1,7 @@
-package org.example.security;
+package io.github.saeidkeneshli.server.security;
 
-import org.example.model.User;
-import org.example.service.UserService;
+import io.github.saeidkeneshli.server.model.User;
+import io.github.saeidkeneshli.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

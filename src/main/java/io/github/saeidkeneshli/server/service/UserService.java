@@ -1,6 +1,6 @@
-package org.example.service;
+package io.github.saeidkeneshli.server.service;
 
-import org.example.model.User;
+import io.github.saeidkeneshli.server.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +18,8 @@ public class UserService implements UserDetailsService {
     private final Map<String, User> userDatabase = new HashMap<>();
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+
+    //TODO: Add database
     public UserService() {
         // In-memory user data for this example
         userDatabase.put("user1", new User("user1", passwordEncoder.encode("pass123")));
