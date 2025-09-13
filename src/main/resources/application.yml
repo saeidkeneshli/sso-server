@@ -1,3 +1,7 @@
+Spring:
+  application:
+    name: "sso-server"
+
 app:
   jwtSecret: QjVkTnh0c3N4d2dDclZ6c1h6TDF3a0lQNmQ3cEhsTjV2M295cFRpUW84M3p1bGJXQzF3Y1dIcFJ6M1JpOW5F
   jwtExpirationInMs: 604800000

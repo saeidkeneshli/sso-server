@@ -1,4 +1,4 @@
-package org.example.dto;
+package io.github.saeidkeneshli.server.dto;
 
 public class AuthResponse {
     private String accessToken;

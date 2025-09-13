@@ -1,4 +1,4 @@
-package org.example.security;
+package io.github.saeidkeneshli.server.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

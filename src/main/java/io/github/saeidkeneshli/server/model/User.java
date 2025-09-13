@@ -1,4 +1,4 @@
-package org.example.model;
+package io.github.saeidkeneshli.server.model;
 
 import lombok.*;
 

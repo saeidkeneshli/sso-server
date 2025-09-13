@@ -1,11 +1,11 @@
-package org.example.controller;
+package io.github.saeidkeneshli.server.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.dto.AuthResponse;
-import org.example.dto.LoginRequest;
-import org.example.model.User;
-import org.example.security.TokenProvider;
-import org.example.service.UserService;
+import io.github.saeidkeneshli.server.dto.AuthResponse;
+import io.github.saeidkeneshli.server.dto.LoginRequest;
+import io.github.saeidkeneshli.server.model.User;
+import io.github.saeidkeneshli.server.security.TokenProvider;
+import io.github.saeidkeneshli.server.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

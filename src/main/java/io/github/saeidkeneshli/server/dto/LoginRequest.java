@@ -1,4 +1,4 @@
-package org.example.dto;
+package io.github.saeidkeneshli.server.dto;
 
 import lombok.Getter;
 import lombok.Setter;

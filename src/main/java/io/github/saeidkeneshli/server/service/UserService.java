@@ -1,6 +1,6 @@
-package org.example.service;
+package io.github.saeidkeneshli.server.service;
 
-import org.example.model.User;
+import io.github.saeidkeneshli.server.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

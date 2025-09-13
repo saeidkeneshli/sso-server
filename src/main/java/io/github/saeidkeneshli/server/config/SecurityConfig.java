@@ -1,7 +1,7 @@
-package org.example.config;
+package io.github.saeidkeneshli.server.config;
 
-import org.example.security.JwtAuthenticationEntryPoint;
-import org.example.security.JwtAuthenticationFilter;
+import io.github.saeidkeneshli.server.security.JwtAuthenticationEntryPoint;
+import io.github.saeidkeneshli.server.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
