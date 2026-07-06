@@ -2,6 +2,8 @@ package io.github.saeidkeneshli.server.config;
 
 import io.github.saeidkeneshli.server.security.JwtAuthenticationEntryPoint;
 import io.github.saeidkeneshli.server.security.JwtAuthenticationFilter;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableMethodSecurity // optional, if you use method-level security annotations
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
@@ -27,6 +29,9 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
         this.unauthorizedHandler = unauthorizedHandler;
     }
+
+    @Value("${app.security.public-paths}")
+    private String[] publicPaths;
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -62,7 +67,7 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(publicPaths).permitAll()
                         .anyRequest().authenticated()
                 );
 

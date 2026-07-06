@@ -1,7 +1,21 @@
-Spring:
+server:
+  port: 8001
+
+spring:
   application:
     name: "sso-server"
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: SSO
+    password: qwerty
+    url: jdbc:oracle:thin:@//192.168.1.159:1521/XEPDB1
 
 app:
   jwtSecret: QjVkTnh0c3N4d2dDclZ6c1h6TDF3a0lQNmQ3cEhsTjV2M295cFRpUW84M3p1bGJXQzF3Y1dIcFJ6M1JpOW5F
   jwtExpirationInMs: 604800000
+  security:
+    public-paths: /auth/**,/swagger-ui/**,/swagger-ui.html,/v3/api-docs/**
+
+logging:
+  level:
+    root: INFO

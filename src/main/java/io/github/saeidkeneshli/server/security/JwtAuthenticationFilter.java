@@ -1,7 +1,7 @@
 package io.github.saeidkeneshli.server.security;
 
 import io.github.saeidkeneshli.server.model.User;
-import io.github.saeidkeneshli.server.service.UserService;
+import io.github.saeidkeneshli.server.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +22,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private TokenProvider tokenProvider;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

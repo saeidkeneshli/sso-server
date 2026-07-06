@@ -1,11 +1,13 @@
 package io.github.saeidkeneshli.server.controller;
 
+import io.github.saeidkeneshli.server.dto.register.RegisterRequest;
+import io.github.saeidkeneshli.server.dto.register.RegisterResponse;
 import lombok.RequiredArgsConstructor;
 import io.github.saeidkeneshli.server.dto.AuthResponse;
 import io.github.saeidkeneshli.server.dto.LoginRequest;
 import io.github.saeidkeneshli.server.model.User;
 import io.github.saeidkeneshli.server.security.TokenProvider;
-import io.github.saeidkeneshli.server.service.UserService;
+import io.github.saeidkeneshli.server.service.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +25,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
@@ -51,5 +53,13 @@ public class AuthController {
 
         // Return the token to the client
         return ResponseEntity.ok(new AuthResponse(token));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerNewUser(@RequestBody RegisterRequest registerRequest) {
+
+        // Return the info with accepted flag
+        RegisterResponse registerResponse = userService.registerNewUser(registerRequest);
+        return ResponseEntity.ok(registerResponse);
     }
 }
