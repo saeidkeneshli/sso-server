@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity(name = "USERS")
-public class User {
+public class Users {
 
     @Id
     @Column(name = "ID")

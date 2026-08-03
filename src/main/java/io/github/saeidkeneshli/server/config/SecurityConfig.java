@@ -2,7 +2,6 @@ package io.github.saeidkeneshli.server.config;
 
 import io.github.saeidkeneshli.server.security.JwtAuthenticationEntryPoint;
 import io.github.saeidkeneshli.server.security.JwtAuthenticationFilter;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

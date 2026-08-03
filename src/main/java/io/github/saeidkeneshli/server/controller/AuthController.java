@@ -6,7 +6,7 @@ import io.github.saeidkeneshli.server.util.CredentialUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import io.github.saeidkeneshli.server.dto.AuthResponse;
-import io.github.saeidkeneshli.server.model.User;
+import io.github.saeidkeneshli.server.model.Users;
 import io.github.saeidkeneshli.server.security.TokenProvider;
 import io.github.saeidkeneshli.server.service.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +27,6 @@ public class AuthController {
     private final TokenProvider tokenProvider;
     private final UserServiceImpl userService;
 
-    /*
-    Enumeration<String> headerNames = request.getHeaderNames();
-    while (headerNames.hasMoreElements()) {
-        String name = headerNames.nextElement();
-        System.out.println(name + ": " + request.getHeader(name));
-    }
-     */
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(HttpServletRequest request) {
 
@@ -56,9 +49,9 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Get the authenticated user details
-        User user = userService.findByUsername(username).orElse(null);
+        Users users = userService.findByUsername(username).orElse(null);
 
-        if (user == null) {
+        if (users == null) {
             return ResponseEntity.badRequest().body(new AuthResponse("User not found"));
         }
 

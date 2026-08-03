@@ -2,8 +2,9 @@ package io.github.saeidkeneshli.server.service;
 
 import io.github.saeidkeneshli.server.dto.register.RegisterRequest;
 import io.github.saeidkeneshli.server.dto.register.RegisterResponse;
-import io.github.saeidkeneshli.server.model.User;
-import io.github.saeidkeneshli.server.repository.UserRepository;
+import io.github.saeidkeneshli.server.model.Users;
+import io.github.saeidkeneshli.server.repository.UsersRepository;
+import io.github.saeidkeneshli.server.util.Empty;
 import io.github.saeidkeneshli.server.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,39 +21,39 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserDetailsService, UserService {
 
-    private final Map<String, User> userDatabase = new HashMap<>();
-    private final UserRepository userRepository;
+    private final Map<String, Users> userDatabase = new HashMap<>();
+    private final UsersRepository usersRepository;
 
 
-    public Optional<User> findByUsername(String username) {
-        return Optional.ofNullable(userDatabase.get(username));
+    public Optional<Users> findByUsername(String username) {
+        return usersRepository.findByUsername(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username)
+        Users users = findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.emptyList());
+        return new org.springframework.security.core.userdetails.User(users.getUsername(), users.getPassword(), Collections.emptyList());
     }
 
     @Override
     public RegisterResponse registerNewUser(RegisterRequest registerRequest) {
-        if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()){
+        if (usersRepository.findByUsername(registerRequest.getUsername()).isPresent()) {
             System.out.println("user already registered.");
             return null;
         }
 
         String hashedPassword = PasswordUtil.hash(registerRequest.getPassword());
 
-        User user = User.builder()
+        Users users = Users.builder()
                 .username(registerRequest.getUsername())
                 .password(hashedPassword)
                 .phoneNumber(registerRequest.getPhoneNumber())
-                .email(registerRequest.getEmail())
-                .address(registerRequest.getAddress().isEmpty() ? "" : registerRequest.getAddress())
+                .email(Empty.isEmpty(registerRequest.getEmail()) ? "" : registerRequest.getEmail())
+                .address(Empty.isEmpty(registerRequest.getAddress()) ? "" : registerRequest.getAddress())
                 .build();
 
-        userRepository.save(user);
+        usersRepository.save(users);
         return null;
     }
 }

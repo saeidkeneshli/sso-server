@@ -1,6 +1,6 @@
 package io.github.saeidkeneshli.server.security;
 
-import io.github.saeidkeneshli.server.model.User;
+import io.github.saeidkeneshli.server.model.Users;
 import io.github.saeidkeneshli.server.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,10 +37,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String username = tokenProvider.getUsernameFromJWT(jwt);
 
                 // Load the user from the database and create an authentication object
-                User userDetails = userService.findByUsername(username).orElse(null);
-                if (userDetails != null) {
+                Users usersDetails = userService.findByUsername(username).orElse(null);
+                if (usersDetails != null) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, Collections.emptyList());
+                            usersDetails, null, Collections.emptyList());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     // Set the authentication in the security context
