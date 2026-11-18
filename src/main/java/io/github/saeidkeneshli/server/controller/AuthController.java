@@ -6,9 +6,9 @@ import io.github.saeidkeneshli.server.util.CredentialUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import io.github.saeidkeneshli.server.dto.AuthResponse;
-import io.github.saeidkeneshli.server.model.Users;
 import io.github.saeidkeneshli.server.security.TokenProvider;
-import io.github.saeidkeneshli.server.service.UserServiceImpl;
+import io.github.saeidkeneshli.server.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +25,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(HttpServletRequest request) {
@@ -48,13 +48,6 @@ public class AuthController {
         // Set the authentication in the security context
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Get the authenticated user details
-        Users users = userService.findByUsername(username).orElse(null);
-
-        if (users == null) {
-            return ResponseEntity.badRequest().body(new AuthResponse("User not found"));
-        }
-
         // Generate a new JWT for the authenticated user
         String token = tokenProvider.createToken(authentication);
 
@@ -63,10 +56,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerNewUser(@RequestBody RegisterRequest registerRequest) {
-
-        // Return the info with accepted flag
+    public ResponseEntity<RegisterResponse> registerNewUser(@RequestBody RegisterRequest registerRequest) {
         RegisterResponse registerResponse = userService.registerNewUser(registerRequest);
+        if (!registerResponse.isAccepted()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(registerResponse);
+        }
         return ResponseEntity.ok(registerResponse);
     }
 }

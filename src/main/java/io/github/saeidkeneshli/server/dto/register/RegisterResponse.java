@@ -8,7 +8,6 @@ import lombok.Setter;
 public class RegisterResponse {
     private boolean accepted;
     private String username;
-    private String password;
 
     private String phoneNumber;
     private String address;

@@ -13,15 +13,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserDetailsService, UserService {
 
-    private final Map<String, Users> userDatabase = new HashMap<>();
     private final UsersRepository usersRepository;
 
 
@@ -38,9 +35,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public RegisterResponse registerNewUser(RegisterRequest registerRequest) {
-        if (usersRepository.findByUsername(registerRequest.getUsername()).isPresent()) {
-            System.out.println("user already registered.");
-            return null;
+        RegisterResponse response = new RegisterResponse();
+        response.setUsername(registerRequest.getUsername());
+        if (findByUsername(registerRequest.getUsername()).isPresent()) {
+            return response;
         }
 
         String hashedPassword = PasswordUtil.hash(registerRequest.getPassword());
@@ -53,7 +51,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .address(Empty.isEmpty(registerRequest.getAddress()) ? "" : registerRequest.getAddress())
                 .build();
 
-        usersRepository.save(users);
-        return null;
+        Users savedUser = usersRepository.save(users);
+        response.setAccepted(true);
+        response.setPhoneNumber(savedUser.getPhoneNumber());
+        response.setAddress(savedUser.getAddress());
+        return response;
     }
 }
