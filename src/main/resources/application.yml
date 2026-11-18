@@ -4,35 +4,6 @@ server:
 spring:
   application:
     name: "sso-server"
-  datasource:
-    driver-class-name: oracle.jdbc.OracleDriver
-    username: SSO
-    password: qwerty
-    url: jdbc:oracle:thin:@//192.168.15.67:1521/XEPDB1
-  jpa:
-    database-platform: org.hibernate.dialect.OracleDialect
-    generate-ddl: true
-    hibernate:
-      ddl-auto: none
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
-      jakarta:
-        persistence:
-          schema-generation:
-            create-source: metadata
-            scripts:
-              action: create
-              create-target: create.sql
-              drop-target: drop.sql
-
-app:
-  jwtSecret: QjVkTnh0c3N4d2dDclZ6c1h6TDF3a0lQNmQ3cEhsTjV2M295cFRpUW84M3p1bGJXQzF3Y1dIcFJ6M1JpOW5F
-  jwtExpirationInMs: 604800000
-  security:
-    public-paths: /auth/**,/swagger-ui/**,/swagger-ui.html,/v3/api-docs/**
-
-logging:
-  level:
-    root: INFO
+  profiles:
+    active:
+      - @spring-boot.run.profiles@

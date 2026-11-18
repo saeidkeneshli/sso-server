@@ -1,0 +1,8 @@
+services:
+  sso-server:
+    build:
+      context: .
+      args:
+        SPRING_PROFILE: "${SPRING_PROFILE:-prod}"
+    ports:
+      - "8001:8001"

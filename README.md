@@ -39,10 +39,25 @@ You need JDK 21, Maven, a reachable Oracle database, and an Oracle schema that t
 3. Start the application.
 
    ```powershell
-   mvn spring-boot:run '-Dspring-boot.run.arguments=--spring.jpa.properties.jakarta.persistence.schema-generation.scripts.action=none'
+   mvn -Pdev spring-boot:run '-Dspring-boot.run.arguments=--spring.jpa.properties.jakarta.persistence.schema-generation.scripts.action=none'
    ```
 
    The launch argument disables schema export so startup leaves the checked-in SQL file alone. The default port is `8001` and can be changed with `SERVER_PORT`. Tokens expire after seven days by default. Set `APP_JWTEXPIRATIONINMS` to override the lifetime in milliseconds.
+
+## Run with Docker Compose
+
+From the project root, run `docker compose up --build` to build and start the server with the `prod` profile by default. Compose publishes the API on port `8001`.
+
+To select a different profile, set `SPRING_PROFILE` in PowerShell before building:
+
+```powershell
+$env:SPRING_PROFILE = 'dev'
+docker compose up --build
+```
+
+Supported values are `dev`, `test`, and `prod`. Compose passes the selection to Maven at build time. Maven packages the selected profile's YAML and sets it as the active Spring profile in the JAR. Use `--build` whenever you switch profiles.
+
+Compose runs the application container. The Oracle database configured for the selected profile must be reachable from that container, and its schema must already contain the `USERS` table.
 
 ## API
 
@@ -78,8 +93,8 @@ A successful login returns HTTP 200 with `accessToken` and `tokenType` set to `B
 ## Build
 
 ```powershell
-mvn clean verify
+mvn -Pprod clean verify
 java -jar target/sso-server-1.0-SNAPSHOT.jar --spring.jpa.properties.jakarta.persistence.schema-generation.scripts.action=none
 ```
 
-Run the JAR with the same Oracle and JWT environment variables used for local development.
+Choose `-Pdev`, `-Ptest`, or `-Pprod` when building the JAR. The example packages the production configuration. Use the Oracle and JWT settings for the selected environment.
