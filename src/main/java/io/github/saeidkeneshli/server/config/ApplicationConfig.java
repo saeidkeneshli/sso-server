@@ -9,12 +9,9 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 @Configuration
 @EnableSpringDataWebSupport
 public class ApplicationConfig {
-    @Configuration
-    public class LoggerConfig {
 
-        @Bean
-        public Logger customizedLogger() {
-            return LoggerFactory.getLogger("custom-logger");
-        }
+    @Bean
+    public Logger customizedLogger() {
+        return LoggerFactory.getLogger("custom-logger");
     }
 }
